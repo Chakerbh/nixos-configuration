@@ -54,22 +54,21 @@ in {
     };
     openvpn = {
       servers = {
-        for-laptop = {
+        server = {
           config = ''
+            server 10.8.0.1 255.255.255.0
+            tls-server
+            dh /root/pki/dh.pem
+            tls-auth /root/ta.key
+            key-direction 0
+            ca /root/pki/ca.crt
+            cert /root/pki/issued/server.crt
+            key /root/pki/private/server.key
             dev tun0
-            ifconfig 10.8.0.1 10.8.0.2
-            secret /root/static.key
+            proto udp
             port 1194
             comp-lzo
-          '';
-        };
-        for-phone = {
-          config = ''
-            dev tun1
-            ifconfig 10.8.0.1 10.8.0.3
-            secret /root/phone-static.key
-            port 1195
-            comp-lzo
+            ping 10
           '';
         };
       };
