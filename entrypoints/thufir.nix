@@ -57,8 +57,6 @@ in {
         server = {
           config = ''
             ifconfig 10.8.0.1 10.8.0.2
-            ifconfig-pool 10.8.0.4 10.8.0.251
-            route 10.8.0.0 255.255.255.0
             tls-server
             dh /root/pki/dh.pem
             tls-auth /root/ta.key
