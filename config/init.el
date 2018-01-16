@@ -213,7 +213,6 @@
   (setq org-modules
         '(org-bbdb
           org-bibtex
-          org-checkboxes
           org-docview
           org-gnus
           org-habit
@@ -286,7 +285,25 @@
   :init
   (defun get-term ()
     (interactive)
-    (term "bash")))
+    (term "bash"))
+  :config
+  (defun expose-global-binding-in-term (binding)
+    (define-key term-raw-map binding
+      (lookup-key (current-global-map) binding)))
+  (expose-global-binding-in-term (kbd "M-x"))
+  (expose-global-binding-in-term (kbd "C-x"))
+  (expose-global-binding-in-term (kbd "C-c a"))
+
+  (defun my/term-toggle-mode ()
+    "Toggles term between line mode and char mode"
+    (interactive)
+    (if (term-in-line-mode)
+        (term-char-mode)
+      (term-line-mode)))
+  (define-key term-mode-map (kbd "M-i") 'my/term-toggle-mode)
+  (define-key term-raw-map (kbd "M-i") 'my/term-toggle-mode)
+
+  (define-key term-raw-map (kbd "C-y") 'term-paste))
 
 (use-package tramp
   :init
