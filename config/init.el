@@ -146,15 +146,10 @@
                                :priority "A")
                         (:name "Appointments"
                                :time-grid t)
-                        (:name "Established Habits"
-                               :and (:habit t :tag "established"))
-                        (:name "Developing Habits"
-                               :and (:habit t)
-                               :order 2)
                         (:name "Tasks"
                                :scheduled t)
                         ))))
-            (tags-todo "project"
+            (tags-todo "project&current"
                   ((org-agenda-overriding-header "Project Next Tasks")
                    (org-agenda-skip-function 'my-next-task-skip-function)))
             (tags-todo "-project-habit-capture-agenda_ignore"
@@ -404,10 +399,5 @@ Repeated invocations toggle between the two most recently open buffers."
 
 (when (daemonp)
   (progn
-    (defun spawn-term (name command)
-      (get-term)
-      (rename-buffer name)
-      (comint-send-string (get-buffer-process name) command))
-    (spawn-term "*sudo*" "exec sudo -i\n")
     (find-file-noselect "/etc/nixos/configuration/config/init.el")
     (find-file-noselect "/etc/nixos/configuration/private/bad-hosts.nix")))
