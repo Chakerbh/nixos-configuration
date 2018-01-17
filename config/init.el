@@ -133,6 +133,8 @@
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb))
   :init
+  (add-hook 'org-mode-hook 'real-auto-save-mode)
+  (add-hook 'org-mode-hook 'auto-revert-mode)
   (add-hook 'org-capture-after-finalize-hook 'delete-frame)
   (setq org-agenda-block-separator
         "=============================================================")
@@ -150,12 +152,12 @@
                                :scheduled t)
                         ))))
             (tags-todo "project&current"
-                  ((org-agenda-overriding-header "Project Next Tasks")
-                   (org-agenda-skip-function 'my-next-task-skip-function)))
+                       ((org-agenda-overriding-header "Current Project Tasks")))
             (tags-todo "-project-habit-capture-agenda_ignore"
                        ((org-agenda-overriding-header "Standalone Tasks")
                         (org-agenda-tags-todo-honor-ignore-options t)
                         (org-agenda-todo-ignore-scheduled 'all)))
+
             ))
           ("c" "Captures"
            ((tags "capture"
@@ -224,7 +226,7 @@
         (lambda ()
           (not (member (nth 2 (org-heading-components)) org-done-keywords))))
   (setq org-refile-targets '((org-agenda-files :maxlevel . 9)))
-  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-use-outline-path 't)
   (setq org-tags-exclude-from-inheritance  '("refile"))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)"
@@ -257,7 +259,6 @@
 
 (use-package real-auto-save
   :init
-  (add-hook 'org-mode-hook 'real-auto-save-mode)
   (setq real-auto-save-interval 30))
 
 (use-package rust-mode)
