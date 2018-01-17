@@ -57,36 +57,37 @@ in {
         server = {
           config = ''
             ifconfig 10.8.0.1 10.8.0.2
-            tls-server
-            dh /root/pki/dh.pem
-            tls-auth /root/ta.key
-            key-direction 0
-            ca /root/pki/ca.crt
-            cert /root/pki/issued/server.crt
-            key /root/pki/private/server.key
             dev tun0
             proto udp
             port 1194
-            comp-lzo
-            ping 10
+
+            tls-server
+            key-direction 0
+            dh /root/pki/dh.pem
+            tls-auth /root/ta.key
+
+            ca /root/pki/ca.crt
+            cert /root/pki/issued/server.crt
+            key /root/pki/private/server.key
           '';
         };
         phone-server = {
           config = ''
             push "dhcp-option DNS 8.8.8.8"
+
             ifconfig 10.8.0.3 10.8.0.4
+            dev tun1
+            proto udp
+            port 1195
+
             tls-server
             key-direction 0
             dh /root/pki/dh.pem
             tls-auth /root/ta.key
+
             ca /root/pki/ca.crt
             cert /root/pki/issued/server.crt
             key /root/pki/private/server.key
-            dev tun1
-            proto udp
-            port 1195
-            comp-lzo
-            ping 10
           '';
         };
       };
