@@ -54,7 +54,7 @@ in {
     };
     openvpn = {
       servers = {
-        server = {
+        laptop = {
           config = ''
             ifconfig 10.8.0.1 10.8.0.2
             dev tun0
@@ -71,7 +71,7 @@ in {
             key /root/pki/private/server.key
           '';
         };
-        phone-server = {
+        phone = {
           config = ''
             push "dhcp-option DNS 8.8.8.8"
 
